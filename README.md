@@ -31,6 +31,26 @@ rejected on price, and in Moinabad pink bollworm returns every August.
 npm run validate:data   # schema, id references and seeded patterns; prints OK
 ```
 
+## Memory layer (Hindsight)
+
+All Hindsight calls live in [`src/lib/memory.ts`](src/lib/memory.ts). Each call is timed and written
+to an in-memory event log (`src/lib/memoryLog.ts`) that the UI shows live.
+
+- **Bank:** `ensureBank()` sets the mission and syncs four directives: catalogue products only,
+  catalogue dosages only, cite visit dates, and say so when there is no history.
+- **Retain:** one document per visit (`visit:<id>`) and per outcome (`outcome:<id>`). Each is stored
+  with the real visit date as its timestamp, tagged `farmer:` `village:` `crop:` `officer:` `kind:`,
+  and uses `observation_scopes: "per_tag"`.
+- **Recall:** `recallFarmer` (tag `farmer:<id>`) and `recallSimilar` (tags `village:<slug>` +
+  `crop:<slug>`, all required).
+- **Reflect:** `reflectVillage` reasons over everything tagged with the village.
+
+```bash
+npm run setup:bank     # create/update the bank + directives (idempotent)
+npm run seed:memory    # retain all 36 visits + 30 outcomes in date order (idempotent)
+npm run smoke:memory   # recall F001, similar Chevella chilli cases, reflect on Chevella
+```
+
 ## Author
 
 Jeevitha Nanepalli

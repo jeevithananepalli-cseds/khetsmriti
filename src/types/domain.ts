@@ -112,9 +112,36 @@ export interface VillageInsight {
 }
 
 export interface MemoryEvent {
+  id: number; // monotonically increasing, for UI keys and polling
   op: MemoryOp;
+  ok: boolean;
   tags: string[];
   summary: string;
   latencyMs: number;
   at: string; // ISO timestamp
+}
+
+export type MemoryFactType = "world" | "experience" | "observation";
+
+/** One memory returned by a Hindsight recall, trimmed to what the app uses. */
+export interface MemoryHit {
+  id: string;
+  text: string;
+  type: MemoryFactType | null;
+  occurredAt: string | null; // ISO; when the remembered event happened
+  documentId: string | null; // e.g. visit:V002, outcome:V002
+  tags: string[];
+  metadata: Record<string, string>;
+}
+
+export interface ReflectSource {
+  id: string | null;
+  text: string;
+  type: string | null;
+  occurredAt: string | null;
+}
+
+export interface ReflectResult {
+  text: string;
+  sources: ReflectSource[];
 }

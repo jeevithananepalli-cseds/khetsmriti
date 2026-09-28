@@ -7,7 +7,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "validate:data": "tsx scripts/validate-data.ts"
+    "validate:data": "tsx scripts/validate-data.ts",
+    "setup:bank": "tsx --env-file=.env.local --conditions=react-server scripts/setup-bank.ts",
+    "seed:memory": "tsx --env-file=.env.local --conditions=react-server scripts/seed-memory.ts",
+    "smoke:memory": "tsx --env-file=.env.local --conditions=react-server scripts/smoke-memory.ts"
   },
   "dependencies": {
     "@vectorize-io/hindsight-client": "^0.10.1",
@@ -17,6 +20,7 @@
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "recharts": "^3.10.1",
+    "server-only": "^0.0.1",
     "zod": "^4.6.5"
   },
   "devDependencies": {
