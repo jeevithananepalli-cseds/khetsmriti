@@ -20,7 +20,7 @@ the memory layer more visible or more useful. If a feature doesn't, don't build 
 
 - Next.js 15 (App Router) + TypeScript (strict) + Tailwind CSS
 - Memory: Hindsight Cloud via `@vectorize-io/hindsight-client`
-- LLM: Groq, primary `openai/gpt-oss-120b`, fallback `qwen/qwen3-32b`
+- LLM: Groq, primary `openai/gpt-oss-120b`, fallback `qwen/qwen3.8-27b`
 - Speech-to-text: Groq Whisper (`whisper-large-v3`) — Telugu + English
 - Validation: `zod` for every LLM output and every API input
 - Charts: `recharts`
@@ -35,7 +35,7 @@ HINDSIGHT_API_KEY=         # from Hindsight Cloud dashboard
 HINDSIGHT_BANK_ID=khetsmriti-demo
 GROQ_API_KEY=
 GROQ_MODEL_PRIMARY=openai/gpt-oss-120b
-GROQ_MODEL_FALLBACK=qwen/qwen3-32b
+GROQ_MODEL_FALLBACK=qwen/qwen3.8-27b
 ```
 
 Commit a `.env.example` with the same keys and empty values.
