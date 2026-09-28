@@ -188,3 +188,5 @@ export interface ApiError {
 }
 
 export type ApiResponse<T> = { ok: true; data: T } | { ok: false; error: ApiError };
+
+export type TranscribeLanguage = "te" | "en" | "auto";

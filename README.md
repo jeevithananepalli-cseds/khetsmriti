@@ -90,6 +90,21 @@ everything tagged `village:<slug>`:
 The questions run in parallel and each answer comes back with its source memories. Complete results
 are cached in memory for 5 minutes. If one question fails, the others are still returned.
 
+## Screens
+
+The app is designed for phones first and works at 380px width.
+
+| Route | What it does |
+|---|---|
+| `/` | Farmers list with search, a village filter and the last visit date |
+| `/farmers/[id]` | Pre-visit brief with the **Memory ON/OFF** toggle, dated evidence chips, the claims memory supports, the recalled memories, and visit records with "Record outcome" |
+| `/farmers/[id]/log` | Log a visit: record by voice (MediaRecorder, max 2 minutes) or type, edit the transcript, review the structured result, then save to memory |
+| `/insights` | Village and crop picker; shows Hindsight's reflect answers with their sources |
+
+The **Memory panel** appears on every screen: a right-hand drawer on desktop and a bottom sheet on
+phones. It polls `/api/memory/events` every 2 seconds and shows each retain, recall and reflect with
+its tags and latency.
+
 ## Author
 
 Jeevitha Nanepalli

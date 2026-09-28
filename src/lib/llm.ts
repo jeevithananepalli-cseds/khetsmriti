@@ -1,5 +1,6 @@
 import "server-only";
 import Groq, { APIConnectionTimeoutError, APIError, RateLimitError } from "groq-sdk";
+import type { TranscribeLanguage } from "@/types/domain";
 import type { z } from "zod";
 import { serverEnv } from "./serverEnv";
 
@@ -140,7 +141,7 @@ export async function generateJSON<T>(
 
 // ---------- speech to text ----------
 
-export type TranscribeLanguage = "te" | "en" | "auto";
+export type { TranscribeLanguage } from "@/types/domain";
 
 export type TranscribeResult = { ok: true; text: string } | { ok: false; error: LlmError };
 

@@ -1,7 +1,7 @@
 import type { Farmer, MemoryHit, Product, Village } from "@/types/domain";
 import type { ChatMessage } from "@/lib/llm";
 import { BRIEF_JSON_SHAPE } from "@/lib/briefSchema";
-import { formatRupees } from "@/lib/narrative";
+import { formatRupees } from "@/lib/format";
 
 export interface BriefPromptInput {
   farmer: Farmer;

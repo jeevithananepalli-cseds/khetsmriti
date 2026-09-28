@@ -1,26 +1,76 @@
 @import "tailwindcss";
 
+/* Earthy, high-contrast palette: field officers read this outdoors on phones. */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: #f6f1e7;
+  --surface: #fffdf8;
+  --ink: #2a2118;
+  --muted: #6a5c4d;
+  --line: #e4d9c6;
+  --leaf: #37622f;
+  --leaf-strong: #2a4d24;
+  --leaf-soft: #e2ebd5;
+  --soil: #8a5a36;
+  --soil-soft: #f1e4d6;
+  --turmeric: #b97c0c;
+  --turmeric-soft: #f8ebc9;
+  --sky: #2d6886;
+  --sky-soft: #dceaf1;
+  --danger: #a93c2a;
+  --danger-soft: #f6dfd9;
+  color-scheme: light;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-leaf: var(--leaf);
+  --color-leaf-strong: var(--leaf-strong);
+  --color-leaf-soft: var(--leaf-soft);
+  --color-soil: var(--soil);
+  --color-soil-soft: var(--soil-soft);
+  --color-turmeric: var(--turmeric);
+  --color-turmeric-soft: var(--turmeric-soft);
+  --color-sky: var(--sky);
+  --color-sky-soft: var(--sky-soft);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+}
+
+@keyframes event-in {
+  from {
+    background-color: var(--turmeric-soft);
+  }
+  to {
+    background-color: transparent;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+.animate-event-in {
+  animation: event-in 2.5s ease-out;
+}
+
+@keyframes pulse-dot {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+
+.animate-pulse-dot {
+  animation: pulse-dot 1.6s ease-in-out infinite;
 }

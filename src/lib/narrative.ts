@@ -1,4 +1,5 @@
 import type { Farmer, Outcome, OutcomeResult, Product, Village, Visit } from "@/types/domain";
+import { formatRupees } from "./format";
 
 // Pure builders for the text + tags we retain in Hindsight. No I/O, so they are easy to unit test.
 
@@ -16,10 +17,6 @@ export const outcomeDocumentId = (visitId: string): string => `outcome:${visitId
 /** Visits are logged in the morning IST; a fixed time keeps timestamps stable across re-seeds. */
 export function isoTimestamp(date: string): string {
   return `${date}T10:00:00+05:30`;
-}
-
-export function formatRupees(amount: number): string {
-  return `₹${new Intl.NumberFormat("en-IN").format(amount)}`;
 }
 
 function describeProducts(productIds: readonly string[], catalogue: readonly Product[]): string {

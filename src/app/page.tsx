@@ -1,11 +1,20 @@
-export default function Home() {
+import { FarmersList } from "@/components/FarmersList";
+import { villages } from "@/lib/data";
+import { listFarmerSummaries } from "@/lib/farmers";
+
+export const dynamic = "force-dynamic";
+
+export default async function FarmersPage() {
+  const farmers = await listFarmerSummaries();
   return (
-    <main className="mx-auto flex min-h-screen max-w-2xl flex-col justify-center gap-4 px-4 py-12">
-      <h1 className="text-4xl font-bold tracking-tight">KhetSmriti</h1>
-      <p className="text-lg leading-relaxed text-foreground/80">
-        A field officer who never forgets a farmer — it remembers every visit, objection and crop
-        outcome, and learns which advice works in each village.
+    <div>
+      <h1 className="text-2xl font-bold tracking-tight">Farmers</h1>
+      <p className="mt-1 text-sm text-muted">
+        Pick a farmer to get a pre-visit brief built from everything KhetSmriti remembers.
       </p>
-    </main>
+      <div className="mt-4">
+        <FarmersList farmers={farmers} villages={[...villages]} />
+      </div>
+    </div>
   );
 }

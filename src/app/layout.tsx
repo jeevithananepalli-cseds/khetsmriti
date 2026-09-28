@@ -1,5 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { AppHeader } from "@/components/AppHeader";
+import { MemoryModeProvider } from "@/components/MemoryMode";
+import { MemoryPanel } from "@/components/MemoryPanel";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -21,6 +24,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
+  themeColor: "#37622f",
 };
 
 export default function RootLayout({
@@ -31,7 +35,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        {children}
+        <MemoryModeProvider>
+          <div className="min-h-screen pb-24 lg:pb-8 lg:pr-[380px]">
+            <AppHeader />
+            <main className="mx-auto max-w-3xl px-4 py-5">{children}</main>
+          </div>
+          <MemoryPanel />
+        </MemoryModeProvider>
       </body>
     </html>
   );

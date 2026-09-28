@@ -1,6 +1,6 @@
 import type { Farmer, Product, Village } from "@/types/domain";
 import type { ChatMessage } from "@/lib/llm";
-import { formatRupees } from "@/lib/narrative";
+import { formatRupees } from "@/lib/format";
 
 export interface StructureVisitPromptInput {
   farmer: Farmer;
