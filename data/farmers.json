@@ -1,0 +1,90 @@
+[
+  {
+    "id": "F001",
+    "name": "Ramesh Goud",
+    "phone": "98xxxxx123",
+    "villageId": "VL01",
+    "landAcres": 4,
+    "crops": ["chilli", "cotton"],
+    "irrigation": "borewell",
+    "preferredLanguage": "te",
+    "priceSensitivity": "high"
+  },
+  {
+    "id": "F002",
+    "name": "Kavitha Bandari",
+    "phone": "94xxxxx507",
+    "villageId": "VL02",
+    "landAcres": 2.5,
+    "crops": ["cotton", "tomato"],
+    "irrigation": "borewell",
+    "preferredLanguage": "te",
+    "priceSensitivity": "medium"
+  },
+  {
+    "id": "F003",
+    "name": "Srinivas Yadav",
+    "phone": "99xxxxx841",
+    "villageId": "VL01",
+    "landAcres": 6,
+    "crops": ["chilli", "tomato"],
+    "irrigation": "borewell",
+    "preferredLanguage": "te",
+    "priceSensitivity": "high"
+  },
+  {
+    "id": "F004",
+    "name": "Venkatesh Mudiraj",
+    "phone": "96xxxxx218",
+    "villageId": "VL02",
+    "landAcres": 8,
+    "crops": ["cotton", "paddy"],
+    "irrigation": "borewell",
+    "preferredLanguage": "te",
+    "priceSensitivity": "medium"
+  },
+  {
+    "id": "F005",
+    "name": "Padma Reddy",
+    "phone": "90xxxxx362",
+    "villageId": "VL01",
+    "landAcres": 3,
+    "crops": ["chilli", "cotton"],
+    "irrigation": "borewell",
+    "preferredLanguage": "te",
+    "priceSensitivity": "high"
+  },
+  {
+    "id": "F006",
+    "name": "Anjaiah Kuruma",
+    "phone": "93xxxxx675",
+    "villageId": "VL02",
+    "landAcres": 5,
+    "crops": ["cotton", "paddy"],
+    "irrigation": "canal",
+    "preferredLanguage": "te",
+    "priceSensitivity": "medium"
+  },
+  {
+    "id": "F007",
+    "name": "Yadagiri Gundla",
+    "phone": "97xxxxx094",
+    "villageId": "VL03",
+    "landAcres": 12,
+    "crops": ["paddy", "maize"],
+    "irrigation": "borewell",
+    "preferredLanguage": "te",
+    "priceSensitivity": "low"
+  },
+  {
+    "id": "F008",
+    "name": "Sujatha Mekala",
+    "phone": "95xxxxx430",
+    "villageId": "VL03",
+    "landAcres": 3.5,
+    "crops": ["cotton", "maize"],
+    "irrigation": "rainfed",
+    "preferredLanguage": "en",
+    "priceSensitivity": "medium"
+  }
+]

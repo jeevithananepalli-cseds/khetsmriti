@@ -1,0 +1,29 @@
+[
+  {
+    "id": "VL01",
+    "slug": "chevella",
+    "name": "Chevella",
+    "mandal": "Chevella",
+    "district": "Ranga Reddy",
+    "dominantCrops": ["chilli", "cotton", "tomato"],
+    "soilType": "Red sandy loam (chalka), low organic carbon"
+  },
+  {
+    "id": "VL02",
+    "slug": "moinabad",
+    "name": "Moinabad",
+    "mandal": "Moinabad",
+    "district": "Ranga Reddy",
+    "dominantCrops": ["cotton", "paddy", "tomato"],
+    "soilType": "Red loam over murram, moderate drainage"
+  },
+  {
+    "id": "VL03",
+    "slug": "shabad",
+    "name": "Shabad",
+    "mandal": "Shabad",
+    "district": "Ranga Reddy",
+    "dominantCrops": ["paddy", "maize", "cotton"],
+    "soilType": "Mixed red and black cotton soil (regur)"
+  }
+]

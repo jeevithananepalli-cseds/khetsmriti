@@ -1,0 +1,324 @@
+{
+  "visits": [
+    {
+      "id": "V001", "farmerId": "F003", "officerId": "O01", "date": "2026-04-02",
+      "crop": "chilli", "cropStage": "fruiting (rabi crop, 3rd picking)",
+      "issue": { "type": "disease", "name": "leaf blight" },
+      "advice": { "productIds": ["P006"], "note": "Brown concentric spots on lower leaves in about a third of the plot. Recommended Amistar Top 200 ml/acre, two sprays 12 days apart. Plain product pitch, no field comparison shown." },
+      "objection": "price too high — ₹1,480 per bottle for 6 acres",
+      "farmerReaction": "hesitant"
+    },
+    {
+      "id": "V002", "farmerId": "F001", "officerId": "O01", "date": "2026-04-08",
+      "crop": "chilli", "cropStage": "fruiting (rabi crop, 3rd picking)",
+      "issue": { "type": "disease", "name": "leaf blight" },
+      "advice": { "productIds": ["P006"], "note": "Leaf blight starting on 2 of 4 acres. Recommended Amistar Top 200 ml/acre, repeat after 12 days. Plain product pitch." },
+      "objection": "price too high — ₹1,480 for one bottle, will wait and see",
+      "farmerReaction": "rejected"
+    },
+    {
+      "id": "V003", "farmerId": "F003", "officerId": "O01", "date": "2026-04-13",
+      "crop": "chilli", "cropStage": "fruiting (rabi crop, 4th picking)",
+      "issue": { "type": "disease", "name": "leaf blight" },
+      "advice": { "productIds": ["P007"], "note": "Premium spray at half dose did not stop blight. Switched to Blitox 50 WP 500 g/acre, two sprays 10 days apart. Pitched as ₹420 per acre per spray." },
+      "objection": null,
+      "farmerReaction": "accepted"
+    },
+    {
+      "id": "V004", "farmerId": "F001", "officerId": "O01", "date": "2026-04-21",
+      "crop": "chilli", "cropStage": "fruiting (rabi crop, 4th picking)",
+      "issue": { "type": "disease", "name": "leaf blight" },
+      "advice": { "productIds": ["P007"], "note": "Blight now on all 4 acres after no spray in April. Advised Blitox 50 WP 500 g/acre, two sprays 10 days apart. Showed yield data from Srinivas Yadav's plot next door: blight stopped within 10 days of Blitox, pickings back to normal." },
+      "objection": null,
+      "farmerReaction": "accepted"
+    },
+    {
+      "id": "V005", "farmerId": "F006", "officerId": "O02", "date": "2026-04-28",
+      "crop": "cotton", "cropStage": "fallow (pre-season)",
+      "issue": { "type": "soil", "name": "hardpan and waterlogging" },
+      "advice": { "productIds": [], "note": "Water stood for days in low patches last kharif. Advised summer deep ploughing and a field drain on the canal side before sowing." },
+      "objection": null,
+      "farmerReaction": "accepted"
+    },
+    {
+      "id": "V006", "farmerId": "F007", "officerId": "O01", "date": "2026-05-05",
+      "crop": "maize", "cropStage": "harvest (rabi crop)",
+      "issue": { "type": "irrigation", "name": "borewell yield dropping" },
+      "advice": { "productIds": [], "note": "Second borewell gives water only 2 hours a day in May. Suggested drip for the next maize crop and asked him to check the horticulture department subsidy." },
+      "objection": "drip is costly, will decide after kharif",
+      "farmerReaction": "hesitant"
+    },
+    {
+      "id": "V007", "farmerId": "F005", "officerId": "O01", "date": "2026-05-12",
+      "crop": "chilli", "cropStage": "final picking (rabi crop)",
+      "issue": { "type": "price", "name": "dry chilli market price drop" },
+      "advice": { "productIds": [], "note": "Dry chilli rate at Warangal fell to about ₹14,000/quintal. Advised cold storage at Shamshabad instead of a distress sale." },
+      "objection": null,
+      "farmerReaction": "accepted"
+    },
+    {
+      "id": "V008", "farmerId": "F004", "officerId": "O02", "date": "2026-05-20",
+      "crop": "paddy", "cropStage": "field preparation",
+      "issue": { "type": "soil", "name": "zinc deficiency" },
+      "advice": { "productIds": ["P014"], "note": "Khaira (rusty brown patches) seen in last kharif paddy; soil card shows low zinc. Advised zinc sulphate 10 kg/acre basal at puddling." },
+      "objection": null,
+      "farmerReaction": "accepted"
+    },
+    {
+      "id": "V009", "farmerId": "F003", "officerId": "O01", "date": "2026-06-10",
+      "crop": "tomato", "cropStage": "flowering and fruit set",
+      "issue": { "type": "pest", "name": "fruit borer" },
+      "advice": { "productIds": ["P011"], "note": "Bore holes on about 8% of green fruits. Advised Proclaim 80 g/acre and removing damaged fruits." },
+      "objection": null,
+      "farmerReaction": "accepted"
+    },
+    {
+      "id": "V010", "farmerId": "F008", "officerId": "O02", "date": "2026-06-12",
+      "crop": "cotton", "cropStage": "pre-sowing",
+      "issue": { "type": "pest", "name": "weeds" },
+      "advice": { "productIds": ["P010"], "note": "Heavy weed flush after first rains. Advised Glycel burn-down before sowing only, never over the crop." },
+      "objection": null,
+      "farmerReaction": "accepted"
+    },
+    {
+      "id": "V011", "farmerId": "F004", "officerId": "O02", "date": "2026-06-15",
+      "crop": "cotton", "cropStage": "sowing",
+      "issue": { "type": "pest", "name": "pink bollworm" },
+      "advice": { "productIds": ["P015"], "note": "Pink bollworm hit his cotton hard in August 2025. Advised timely sowing of a BG-II hybrid and not extending the crop into January." },
+      "objection": null,
+      "farmerReaction": "accepted"
+    },
+    {
+      "id": "V012", "farmerId": "F001", "officerId": "O01", "date": "2026-06-18",
+      "crop": "cotton", "cropStage": "sowing",
+      "issue": { "type": "soil", "name": "phosphorus deficiency" },
+      "advice": { "productIds": ["P013"], "note": "Soil card shows low phosphorus. Advised DAP 50 kg/acre basal at sowing." },
+      "objection": "wants to use leftover complex fertiliser from last year",
+      "farmerReaction": "hesitant"
+    },
+    {
+      "id": "V013", "farmerId": "F007", "officerId": "O01", "date": "2026-06-20",
+      "crop": "maize", "cropStage": "early whorl",
+      "issue": { "type": "pest", "name": "fall armyworm" },
+      "advice": { "productIds": ["P011"], "note": "Window-pane feeding and frass in whorls on about 15% plants. Advised Proclaim 80 g/acre directed into the whorl." },
+      "objection": null,
+      "farmerReaction": "accepted"
+    },
+    {
+      "id": "V014", "farmerId": "F006", "officerId": "O02", "date": "2026-06-22",
+      "crop": "cotton", "cropStage": "sowing",
+      "issue": { "type": "pest", "name": "pink bollworm" },
+      "advice": { "productIds": ["P015"], "note": "Advised RCH 659 BG-II and early sowing; bollworm damaged his bolls last August too." },
+      "objection": "prefers neighbour's brand of hybrid seed",
+      "farmerReaction": "hesitant"
+    },
+    {
+      "id": "V015", "farmerId": "F005", "officerId": "O01", "date": "2026-06-25",
+      "crop": "cotton", "cropStage": "seedling (3 weeks)",
+      "issue": { "type": "soil", "name": "nitrogen deficiency" },
+      "advice": { "productIds": ["P012"], "note": "Pale yellow seedlings after heavy June rain leached the soil. Advised first urea top dressing now, second at squaring." },
+      "objection": null,
+      "farmerReaction": "accepted"
+    },
+    {
+      "id": "V016", "farmerId": "F008", "officerId": "O02", "date": "2026-07-08",
+      "crop": "maize", "cropStage": "knee-high",
+      "issue": { "type": "pest", "name": "fall armyworm" },
+      "advice": { "productIds": ["P011"], "note": "Fresh whorl damage on about 20% plants. Advised Proclaim 80 g/acre." },
+      "objection": "prefers neighbour's brand",
+      "farmerReaction": "hesitant"
+    },
+    {
+      "id": "V017", "farmerId": "F007", "officerId": "O01", "date": "2026-07-16",
+      "crop": "paddy", "cropStage": "transplanting",
+      "issue": { "type": "soil", "name": "zinc deficiency" },
+      "advice": { "productIds": ["P014"], "note": "Nursery leaves showing brown spots typical of zinc deficiency. Advised zinc sulphate 10 kg/acre basal in the main field." },
+      "objection": null,
+      "farmerReaction": "accepted"
+    },
+    {
+      "id": "V018", "farmerId": "F003", "officerId": "O01", "date": "2026-07-22",
+      "crop": "chilli", "cropStage": "transplanting (kharif crop)",
+      "issue": { "type": "pest", "name": "thrips" },
+      "advice": { "productIds": ["P004"], "note": "Upward leaf curling on young transplants. Advised Confidor 100 ml/acre. Reminded him with yield data: his April switch to the standard spray saved his last two pickings." },
+      "objection": null,
+      "farmerReaction": "accepted"
+    },
+    {
+      "id": "V019", "farmerId": "F004", "officerId": "O02", "date": "2026-07-24",
+      "crop": "cotton", "cropStage": "squaring",
+      "issue": { "type": "pest", "name": "pink bollworm" },
+      "advice": { "productIds": [], "note": "Early monitoring before the usual August attack. Advised 5 pheromone traps per acre; spray only if more than 8 moths per trap for 3 nights." },
+      "objection": null,
+      "farmerReaction": "accepted"
+    },
+    {
+      "id": "V020", "farmerId": "F005", "officerId": "O01", "date": "2026-07-30",
+      "crop": "chilli", "cropStage": "vegetative (2 weeks after transplanting)",
+      "issue": { "type": "pest", "name": "thrips" },
+      "advice": { "productIds": ["P004"], "note": "Leaf curl starting on border rows. Recommended Confidor 100 ml/acre. Plain product pitch, no yield comparison." },
+      "objection": "price too high, will try neem oil first",
+      "farmerReaction": "hesitant"
+    },
+    {
+      "id": "V021", "farmerId": "F001", "officerId": "O01", "date": "2026-08-04",
+      "crop": "cotton", "cropStage": "squaring",
+      "issue": { "type": "pest", "name": "sucking pests" },
+      "advice": { "productIds": ["P003"], "note": "Jassid hopper burn on leaf edges. Advised Ulala 60 g/acre. Framed as ₹430 per acre versus losing squares; showed last year's yield gap from unsprayed plots." },
+      "objection": null,
+      "farmerReaction": "accepted"
+    },
+    {
+      "id": "V022", "farmerId": "F006", "officerId": "O02", "date": "2026-08-06",
+      "crop": "cotton", "cropStage": "flowering",
+      "issue": { "type": "pest", "name": "pink bollworm" },
+      "advice": { "productIds": ["P002"], "note": "Rosette flowers on about 10% plants. Farmer says pink bollworm came in the same week of August last year. Advised Profex Super 400 ml/acre, repeat in 10 days." },
+      "objection": null,
+      "farmerReaction": "accepted"
+    },
+    {
+      "id": "V023", "farmerId": "F008", "officerId": "O02", "date": "2026-08-07",
+      "crop": "cotton", "cropStage": "squaring",
+      "issue": { "type": "pest", "name": "sucking pests" },
+      "advice": { "productIds": ["P003"], "note": "Aphids and jassids above threshold. Advised Ulala 60 g/acre." },
+      "objection": null,
+      "farmerReaction": "accepted"
+    },
+    {
+      "id": "V024", "farmerId": "F004", "officerId": "O02", "date": "2026-08-11",
+      "crop": "cotton", "cropStage": "flowering",
+      "issue": { "type": "pest", "name": "pink bollworm" },
+      "advice": { "productIds": ["P001"], "note": "Traps crossed threshold (11 moths/trap for 3 nights); rosette flowers on about 12% plants, same as August 2025. Advised Coragen 60 ml/acre." },
+      "objection": null,
+      "farmerReaction": "accepted"
+    },
+    {
+      "id": "V025", "farmerId": "F005", "officerId": "O01", "date": "2026-08-12",
+      "crop": "chilli", "cropStage": "vegetative",
+      "issue": { "type": "disease", "name": "leaf blight" },
+      "advice": { "productIds": ["P007"], "note": "Leaf blight spots after a week of cloudy weather. Advised Blitox 50 WP 500 g/acre. Showed yield data: Srinivas and Ramesh both controlled blight with Blitox in April at ₹420 per acre." },
+      "objection": null,
+      "farmerReaction": "accepted"
+    },
+    {
+      "id": "V026", "farmerId": "F007", "officerId": "O01", "date": "2026-08-18",
+      "crop": "paddy", "cropStage": "tillering",
+      "issue": { "type": "soil", "name": "nitrogen deficiency" },
+      "advice": { "productIds": ["P012"], "note": "Uniform yellowing, leaf colour chart reading 3. Advised urea top dressing now." },
+      "objection": null,
+      "farmerReaction": "accepted"
+    },
+    {
+      "id": "V027", "farmerId": "F002", "officerId": "O02", "date": "2026-08-19",
+      "crop": "cotton", "cropStage": "flowering",
+      "issue": { "type": "pest", "name": "pink bollworm" },
+      "advice": { "productIds": ["P002"], "note": "First visit. Rosette flowers on about 8% plants. Advised Profex Super 400 ml/acre and 4 pheromone traps per acre." },
+      "objection": "prefers neighbour's brand",
+      "farmerReaction": "hesitant"
+    },
+    {
+      "id": "V028", "farmerId": "F001", "officerId": "O01", "date": "2026-08-26",
+      "crop": "chilli", "cropStage": "vegetative (kharif crop)",
+      "issue": { "type": "disease", "name": "leaf blight" },
+      "advice": { "productIds": ["P007"], "note": "Early blight spots on kharif chilli. Farmer asked for Blitox himself after the April result. Advised Blitox 50 WP 500 g/acre at first spots, not after spread." },
+      "objection": null,
+      "farmerReaction": "accepted"
+    },
+    {
+      "id": "V029", "farmerId": "F006", "officerId": "O02", "date": "2026-08-27",
+      "crop": "cotton", "cropStage": "boll formation",
+      "issue": { "type": "pest", "name": "pink bollworm" },
+      "advice": { "productIds": ["P001"], "note": "Second flush of pink bollworm; damaged green bolls on about 12% plants despite earlier spray. Advised Coragen 60 ml/acre." },
+      "objection": "price too high",
+      "farmerReaction": "hesitant"
+    },
+    {
+      "id": "V030", "farmerId": "F008", "officerId": "O02", "date": "2026-08-29",
+      "crop": "cotton", "cropStage": "flowering",
+      "issue": { "type": "pest", "name": "pink bollworm" },
+      "advice": { "productIds": ["P002"], "note": "A few rosette flowers (about 4% plants), lower than Moinabad. Advised Profex Super 400 ml/acre." },
+      "objection": null,
+      "farmerReaction": "accepted"
+    },
+    {
+      "id": "V031", "farmerId": "F004", "officerId": "O02", "date": "2026-09-03",
+      "crop": "paddy", "cropStage": "maximum tillering",
+      "issue": { "type": "disease", "name": "sheath blight" },
+      "advice": { "productIds": ["P009"], "note": "Oval grey lesions on sheaths near the water line in dense patches. Advised Tilt 200 ml/acre and draining the field for 3 days." },
+      "objection": null,
+      "farmerReaction": "accepted"
+    },
+    {
+      "id": "V032", "farmerId": "F007", "officerId": "O01", "date": "2026-09-08",
+      "crop": "paddy", "cropStage": "booting",
+      "issue": { "type": "disease", "name": "sheath blight" },
+      "advice": { "productIds": ["P009"], "note": "Sheath blight lesions in 3 of 12 acres. Advised Tilt 200 ml/acre on the affected blocks." },
+      "objection": null,
+      "farmerReaction": "accepted"
+    },
+    {
+      "id": "V033", "farmerId": "F003", "officerId": "O01", "date": "2026-09-09",
+      "crop": "chilli", "cropStage": "flowering (kharif crop)",
+      "issue": { "type": "pest", "name": "mites" },
+      "advice": { "productIds": ["P005"], "note": "Downward leaf curling and tiny mites under leaves. Recommended Oberon 160 ml/acre. Plain product pitch." },
+      "objection": "price too high — ₹1,690 per bottle",
+      "farmerReaction": "rejected"
+    },
+    {
+      "id": "V034", "farmerId": "F005", "officerId": "O01", "date": "2026-09-15",
+      "crop": "chilli", "cropStage": "flowering (kharif crop)",
+      "issue": { "type": "disease", "name": "leaf blight" },
+      "advice": { "productIds": ["P007"], "note": "Blight came back after 5 days of heavy rain. Advised Blitox 50 WP 500 g/acre again, spray only on a dry forecast." },
+      "objection": null,
+      "farmerReaction": "accepted"
+    },
+    {
+      "id": "V035", "farmerId": "F006", "officerId": "O02", "date": "2026-09-17",
+      "crop": "paddy", "cropStage": "panicle initiation",
+      "issue": { "type": "soil", "name": "nitrogen deficiency" },
+      "advice": { "productIds": ["P012"], "note": "Yellowing in canal-end plots. Advised second urea top dressing now." },
+      "objection": null,
+      "farmerReaction": "accepted"
+    },
+    {
+      "id": "V036", "farmerId": "F008", "officerId": "O02", "date": "2026-09-22",
+      "crop": "cotton", "cropStage": "boll formation",
+      "issue": { "type": "irrigation", "name": "dry spell and boll shedding" },
+      "advice": { "productIds": [], "note": "Rainfed field, 18 days without rain, squares and small bolls shedding. Advised mulching with crop residue and not spraying anything until rain." },
+      "objection": null,
+      "farmerReaction": "accepted"
+    }
+  ],
+  "outcomes": [
+    { "visitId": "V001", "followUpDate": "2026-04-12", "applied": true, "result": "failed", "yieldNote": "Bought one bottle and sprayed half dose over 2 acres to save money; no second spray. Blight kept spreading." },
+    { "visitId": "V002", "followUpDate": "2026-04-18", "applied": false, "result": "not_applied", "yieldNote": "Did not spray. Blight spread to about 40% of plants; expects about 20% lower picking yield this season." },
+    { "visitId": "V003", "followUpDate": "2026-04-23", "applied": true, "result": "controlled", "yieldNote": "Blight stopped after two Blitox sprays. Last two pickings normal, about 12 quintal/acre dry chilli." },
+    { "visitId": "V004", "followUpDate": "2026-05-02", "applied": true, "result": "controlled", "yieldNote": "New leaves clean after the second spray. Final pickings recovered, but season loss about 20% from the April delay." },
+    { "visitId": "V006", "followUpDate": "2026-06-05", "applied": false, "result": "not_applied", "yieldNote": "Postponed drip decision to after kharif." },
+    { "visitId": "V008", "followUpDate": "2026-07-28", "applied": true, "result": "controlled", "yieldNote": "No khaira patches in the main field this season." },
+    { "visitId": "V009", "followUpDate": "2026-06-20", "applied": true, "result": "controlled", "yieldNote": "Fresh fruit damage below 2%; marketable fruit up." },
+    { "visitId": "V010", "followUpDate": "2026-06-22", "applied": true, "result": "controlled", "yieldNote": "Clean seedbed at sowing." },
+    { "visitId": "V011", "followUpDate": "2026-06-28", "applied": true, "result": "controlled", "yieldNote": "Sown on time; good even stand." },
+    { "visitId": "V012", "followUpDate": "2026-07-02", "applied": true, "result": "partial", "yieldNote": "Used DAP on 2 acres and leftover complex on 2 acres; DAP half looks more vigorous." },
+    { "visitId": "V013", "followUpDate": "2026-07-01", "applied": true, "result": "controlled", "yieldNote": "Fresh whorl damage stopped within a week." },
+    { "visitId": "V014", "followUpDate": "2026-07-05", "applied": false, "result": "not_applied", "yieldNote": "Sowed a different hybrid bought from a local dealer on the neighbour's word." },
+    { "visitId": "V015", "followUpDate": "2026-07-06", "applied": true, "result": "controlled", "yieldNote": "Seedlings greened up within 10 days." },
+    { "visitId": "V016", "followUpDate": "2026-07-18", "applied": true, "result": "partial", "yieldNote": "Sprayed the neighbour's product first; used Proclaim a week later. About 10% plants with lasting damage." },
+    { "visitId": "V017", "followUpDate": "2026-07-30", "applied": true, "result": "controlled", "yieldNote": "Transplants established well, no zinc symptoms." },
+    { "visitId": "V018", "followUpDate": "2026-08-02", "applied": true, "result": "controlled", "yieldNote": "New growth without curl." },
+    { "visitId": "V019", "followUpDate": "2026-08-04", "applied": true, "result": "partial", "yieldNote": "Traps installed; moth catches rising sharply by early August, as last year." },
+    { "visitId": "V020", "followUpDate": "2026-08-09", "applied": false, "result": "not_applied", "yieldNote": "Used neem oil only; curl spread to about 20% plants." },
+    { "visitId": "V021", "followUpDate": "2026-08-14", "applied": true, "result": "controlled", "yieldNote": "Hopper burn stopped; squares retained." },
+    { "visitId": "V022", "followUpDate": "2026-08-17", "applied": true, "result": "partial", "yieldNote": "Second spray was 6 days late; about 15% bolls damaged." },
+    { "visitId": "V023", "followUpDate": "2026-08-17", "applied": true, "result": "controlled", "yieldNote": "Sucking pests below threshold." },
+    { "visitId": "V024", "followUpDate": "2026-08-22", "applied": true, "result": "controlled", "yieldNote": "Rosette flowers down to about 2%; much better than August 2025." },
+    { "visitId": "V025", "followUpDate": "2026-08-23", "applied": true, "result": "controlled", "yieldNote": "Spots dried up; no new infection after one spray." },
+    { "visitId": "V026", "followUpDate": "2026-08-28", "applied": true, "result": "controlled", "yieldNote": "Crop greened up; leaf colour chart reading 4." },
+    { "visitId": "V027", "followUpDate": "2026-08-30", "applied": true, "result": "partial", "yieldNote": "Sprayed the neighbour's recommended product first, then Profex Super; about 10% bolls damaged." },
+    { "visitId": "V028", "followUpDate": "2026-09-06", "applied": true, "result": "controlled", "yieldNote": "Spots stopped spreading after one spray; sprayed early this time." },
+    { "visitId": "V029", "followUpDate": "2026-09-07", "applied": true, "result": "controlled", "yieldNote": "Bought one bottle after comparing loss per acre; fresh boll damage stopped." },
+    { "visitId": "V030", "followUpDate": "2026-09-09", "applied": true, "result": "controlled", "yieldNote": "Rosette flowers cleared." },
+    { "visitId": "V031", "followUpDate": "2026-09-14", "applied": true, "result": "controlled", "yieldNote": "Lesions stopped moving up the sheath." },
+    { "visitId": "V034", "followUpDate": "2026-09-26", "applied": true, "result": "partial", "yieldNote": "Heavy rain 4 hours after spraying; about half the spots stopped. Needs a repeat on a dry day." }
+  ]
+}

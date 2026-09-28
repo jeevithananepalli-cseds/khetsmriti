@@ -57,6 +57,7 @@ export interface VisitAdvice {
 
 /** The part of a visit the LLM extracts from an officer's free-text / voice note. */
 export interface VisitStructured {
+  crop: string; // crop slug, e.g. "chilli"; drives the crop:<slug> memory tag
   cropStage: string;
   issue: VisitIssue;
   advice: VisitAdvice;

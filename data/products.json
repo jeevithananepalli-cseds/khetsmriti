@@ -1,0 +1,167 @@
+[
+  {
+    "id": "P001",
+    "name": "Coragen 18.5 SC (Chlorantraniliprole)",
+    "type": "insecticide",
+    "targetIssues": ["pink bollworm", "fruit borer", "fall armyworm", "stem borer"],
+    "crops": ["cotton", "chilli", "tomato", "paddy", "maize"],
+    "dosePerAcre": "60 ml in 200 L water",
+    "packSize": "60 ml",
+    "priceINR": 960,
+    "tier": "premium"
+  },
+  {
+    "id": "P002",
+    "name": "Profex Super (Profenofos 40% + Cypermethrin 4% EC)",
+    "type": "insecticide",
+    "targetIssues": ["pink bollworm", "fruit borer"],
+    "crops": ["cotton", "chilli"],
+    "dosePerAcre": "400 ml in 200 L water",
+    "packSize": "500 ml",
+    "priceINR": 520,
+    "tier": "budget"
+  },
+  {
+    "id": "P003",
+    "name": "Ulala (Flonicamid 50% WG)",
+    "type": "insecticide",
+    "targetIssues": ["sucking pests", "aphids", "jassids", "whitefly"],
+    "crops": ["cotton", "chilli"],
+    "dosePerAcre": "60 g in 200 L water",
+    "packSize": "60 g",
+    "priceINR": 430,
+    "tier": "standard"
+  },
+  {
+    "id": "P004",
+    "name": "Confidor (Imidacloprid 17.8% SL)",
+    "type": "insecticide",
+    "targetIssues": ["thrips", "sucking pests", "jassids"],
+    "crops": ["chilli", "cotton", "tomato"],
+    "dosePerAcre": "100 ml in 200 L water",
+    "packSize": "250 ml",
+    "priceINR": 460,
+    "tier": "standard"
+  },
+  {
+    "id": "P005",
+    "name": "Oberon (Spiromesifen 22.9% SC)",
+    "type": "insecticide",
+    "targetIssues": ["mites"],
+    "crops": ["chilli", "tomato"],
+    "dosePerAcre": "160 ml in 200 L water",
+    "packSize": "250 ml",
+    "priceINR": 1690,
+    "tier": "premium"
+  },
+  {
+    "id": "P006",
+    "name": "Amistar Top (Azoxystrobin 18.2% + Difenoconazole 11.4% SC)",
+    "type": "fungicide",
+    "targetIssues": ["leaf blight", "fruit rot", "powdery mildew"],
+    "crops": ["chilli", "tomato", "paddy"],
+    "dosePerAcre": "200 ml in 200 L water",
+    "packSize": "500 ml",
+    "priceINR": 1480,
+    "tier": "premium"
+  },
+  {
+    "id": "P007",
+    "name": "Blitox 50 WP (Copper Oxychloride 50% WP)",
+    "type": "fungicide",
+    "targetIssues": ["leaf blight", "bacterial leaf spot"],
+    "crops": ["chilli", "tomato", "cotton"],
+    "dosePerAcre": "500 g in 200 L water",
+    "packSize": "500 g",
+    "priceINR": 420,
+    "tier": "standard"
+  },
+  {
+    "id": "P008",
+    "name": "Indofil M-45 (Mancozeb 75% WP)",
+    "type": "fungicide",
+    "targetIssues": ["leaf blight", "fruit rot", "downy mildew"],
+    "crops": ["chilli", "tomato", "maize"],
+    "dosePerAcre": "600 g in 200 L water",
+    "packSize": "500 g",
+    "priceINR": 340,
+    "tier": "budget"
+  },
+  {
+    "id": "P009",
+    "name": "Tilt 25 EC (Propiconazole 25% EC)",
+    "type": "fungicide",
+    "targetIssues": ["sheath blight", "powdery mildew"],
+    "crops": ["paddy", "chilli"],
+    "dosePerAcre": "200 ml in 200 L water",
+    "packSize": "250 ml",
+    "priceINR": 560,
+    "tier": "standard"
+  },
+  {
+    "id": "P010",
+    "name": "Glycel 41 SL (Glyphosate 41% SL)",
+    "type": "herbicide",
+    "targetIssues": ["weeds"],
+    "crops": ["cotton", "maize"],
+    "dosePerAcre": "1 L in 200 L water, pre-sowing burn-down only",
+    "packSize": "1 L",
+    "priceINR": 480,
+    "tier": "budget"
+  },
+  {
+    "id": "P011",
+    "name": "Proclaim 5 SG (Emamectin Benzoate 5% SG)",
+    "type": "insecticide",
+    "targetIssues": ["fall armyworm", "fruit borer"],
+    "crops": ["maize", "chilli", "tomato", "cotton"],
+    "dosePerAcre": "80 g in 200 L water",
+    "packSize": "100 g",
+    "priceINR": 590,
+    "tier": "standard"
+  },
+  {
+    "id": "P012",
+    "name": "IFFCO Neem Coated Urea (46% N)",
+    "type": "fertiliser",
+    "targetIssues": ["nitrogen deficiency"],
+    "crops": ["paddy", "maize", "cotton", "chilli", "tomato"],
+    "dosePerAcre": "45 kg, split into two top dressings",
+    "packSize": "45 kg",
+    "priceINR": 267,
+    "tier": "budget"
+  },
+  {
+    "id": "P013",
+    "name": "Gromor DAP (18-46-0)",
+    "type": "fertiliser",
+    "targetIssues": ["phosphorus deficiency"],
+    "crops": ["cotton", "chilli", "paddy", "maize", "tomato"],
+    "dosePerAcre": "50 kg as basal dose at sowing",
+    "packSize": "50 kg",
+    "priceINR": 1350,
+    "tier": "standard"
+  },
+  {
+    "id": "P014",
+    "name": "Multiplex Zinc Sulphate (Zn 21%)",
+    "type": "fertiliser",
+    "targetIssues": ["zinc deficiency"],
+    "crops": ["paddy", "maize", "cotton", "chilli"],
+    "dosePerAcre": "10 kg basal, mixed with sand",
+    "packSize": "5 kg",
+    "priceINR": 390,
+    "tier": "budget"
+  },
+  {
+    "id": "P015",
+    "name": "Rasi RCH 659 BG-II Cotton Hybrid Seed",
+    "type": "seed",
+    "targetIssues": ["pink bollworm"],
+    "crops": ["cotton"],
+    "dosePerAcre": "2 packets (475 g each)",
+    "packSize": "475 g",
+    "priceINR": 901,
+    "tier": "standard"
+  }
+]
