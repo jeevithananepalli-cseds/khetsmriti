@@ -79,6 +79,17 @@ Sample outputs for F001 are in [`docs/brief-samples.md`](docs/brief-samples.md).
 - `POST /api/outcomes {visitId, applied, result, yieldNote}`: retains the outcome as `outcome:<id>`.
 - `npm run forget:docs -- visit:V037 outcome:V037`: deletes test documents from memory.
 
+## Village insights
+
+`GET /api/insights?village=<slug>&crop=<slug>` asks Hindsight `reflect` three fixed questions over
+everything tagged `village:<slug>`:
+1. What works for the most common problem?
+2. How to handle price and brand objections.
+3. What to watch for next month.
+
+The questions run in parallel and each answer comes back with its source memories. Complete results
+are cached in memory for 5 minutes. If one question fails, the others are still returned.
+
 ## Author
 
 Jeevitha Nanepalli

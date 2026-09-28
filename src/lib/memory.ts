@@ -286,10 +286,14 @@ function toReflectResult(res: ReflectResponse): ReflectResult {
   };
 }
 
-/** Asks Hindsight to reason over everything tagged with this village. */
-export async function reflectVillage(villageSlug: string, question: string): Promise<ReflectResult> {
+/**
+ * Asks Hindsight to reason over everything tagged with this village. The crop narrows the question text;
+ * the tag filter stays on the village so per-village observations are included.
+ */
+export async function reflectVillage(villageSlug: string, question: string, cropSlug?: string): Promise<ReflectResult> {
   const tags = [tag.village(villageSlug)];
-  const { value } = await tracked("reflect", tags, `reflect ${villageSlug}: ${question.slice(0, 60)}`, () =>
+  const eventTags = cropSlug ? [...tags, tag.crop(cropSlug)] : tags;
+  const { value } = await tracked("reflect", eventTags, `reflect ${villageSlug}: ${question.slice(0, 60)}`, () =>
     client().reflect(bankId(), question, { budget: "mid", tags, tagsMatch: "any_strict", includeFacts: true }),
   );
   return toReflectResult(value);

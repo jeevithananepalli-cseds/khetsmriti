@@ -103,12 +103,24 @@ export interface Brief {
   confidence: Confidence;
 }
 
+export type InsightKey = "what_works" | "objections" | "watch_next";
+
 export interface VillageInsight {
+  key: InsightKey;
   villageSlug: string;
   cropSlug: string | null;
   question: string;
-  answer: string;
-  sources: string[];
+  answer: string; // markdown from Hindsight reflect; empty when error is set
+  sources: ReflectSource[];
+  error: string | null;
+}
+
+export interface InsightsResponse {
+  villageSlug: string;
+  cropSlug: string | null;
+  generatedAt: string;
+  cached: boolean;
+  insights: VillageInsight[];
 }
 
 export interface MemoryEvent {
