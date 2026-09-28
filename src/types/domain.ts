@@ -145,3 +145,34 @@ export interface ReflectResult {
   text: string;
   sources: ReflectSource[];
 }
+
+export interface FarmerSummary {
+  farmer: Farmer;
+  village: Village;
+  visitCount: number;
+  lastVisitDate: string | null;
+}
+
+export interface FarmerDetail extends FarmerSummary {
+  visits: Visit[];
+  outcomes: Outcome[];
+}
+
+export interface BriefResponse {
+  brief: Brief;
+  memoryEnabled: boolean;
+  visitDate: string;
+  model: string;
+  attempts: number;
+  /** Things the guardrails removed or could not verify; shown to the officer. */
+  warnings: string[];
+  farmerMemories: MemoryHit[];
+  similarMemories: MemoryHit[];
+}
+
+export interface ApiError {
+  code: string;
+  message: string;
+}
+
+export type ApiResponse<T> = { ok: true; data: T } | { ok: false; error: ApiError };

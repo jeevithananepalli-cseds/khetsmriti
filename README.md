@@ -51,6 +51,21 @@ npm run seed:memory    # retain all 36 visits + 30 outcomes in date order (idemp
 npm run smoke:memory   # recall F001, similar Chevella chilli cases, reflect on Chevella
 ```
 
+## Pre-visit brief
+
+`POST /api/brief {farmerId, memoryEnabled}` builds the brief in [`src/lib/brief.ts`](src/lib/brief.ts):
+
+1. **Memory ON:** recalls this farmer's memories plus similar cases from other farmers in the same
+   village and crops. **Memory OFF:** skips recall entirely, so the model sees only the profile and
+   the catalogue.
+2. Groq (`src/lib/llm.ts`) returns JSON that is validated with zod. If it fails, it retries once with
+   the error, then tries the fallback model, then returns a typed error.
+3. Guardrails drop any product id not in `data/products.json`, and remove citation dates that don't
+   match a recalled memory. Anything removed is listed in `warnings`.
+
+Other routes: `GET /api/farmers`, `GET /api/farmers/:id`, `GET /api/memory/events?after=<id>`.
+Sample outputs for F001 are in [`docs/brief-samples.md`](docs/brief-samples.md).
+
 ## Author
 
 Jeevitha Nanepalli
