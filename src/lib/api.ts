@@ -2,6 +2,7 @@ import "server-only";
 import { NextResponse } from "next/server";
 import type { z } from "zod";
 import type { ApiResponse } from "@/types/domain";
+import { clientKey, createRateLimiter } from "./rateLimit";
 
 // Shared helpers so every route returns { ok: true, data } or { ok: false, error }.
 
@@ -51,4 +52,16 @@ export function statusFor(code: string): number {
 export function serverError(context: string, err: unknown): NextResponse<ApiResponse<never>> {
   console.error(`[api] ${context}:`, err);
   return fail("internal", "Something went wrong on the server. Please try again.", 500);
+}
+
+// Routes that call Groq or Hindsight share one budget per client: 30 requests per minute.
+const aiLimiter = createRateLimiter({ limit: 30, windowMs: 60_000 });
+
+/** Returns a 429 response when the caller is over the AI budget, otherwise null. */
+export function rateLimited(req: Request): NextResponse<ApiResponse<never>> | null {
+  const result = aiLimiter(clientKey(req));
+  if (result.allowed) return null;
+  const res = fail("rate_limited", `Too many requests. Try again in ${result.retryAfterSeconds} s.`, 429);
+  res.headers.set("Retry-After", String(result.retryAfterSeconds));
+  return res;
 }

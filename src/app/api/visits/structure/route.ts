@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { fail, ok, parseJsonBody, serverError, statusFor } from "@/lib/api";
+import { fail, ok, parseJsonBody, rateLimited, serverError, statusFor } from "@/lib/api";
 import { findFarmer, findVillage } from "@/lib/data";
 import { todayInIndia } from "@/lib/season";
 import { structureVisit } from "@/lib/visitStructuring";
@@ -15,6 +15,8 @@ const bodySchema = z.object({
 
 /** Structures a note for the officer to review; nothing is saved. */
 export async function POST(req: Request) {
+  const limited = rateLimited(req);
+  if (limited) return limited;
   const body = await parseJsonBody(req, bodySchema);
   if (!body.ok) return body.response;
   const farmer = findFarmer(body.data.farmerId);

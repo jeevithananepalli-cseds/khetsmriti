@@ -1,7 +1,6 @@
 import "server-only";
-import type { MemoryItemInput } from "@vectorize-io/hindsight-client";
 import { findFarmer, findVillage, products, seedOutcomes, seedVisits } from "./data";
-import { outcomeMemoryItem, visitMemoryItem } from "./memory";
+import { outcomeMemoryItem, visitMemoryItem, type MemoryItemInput } from "./memory";
 
 // Builds the Hindsight items for the seed history. Shared by `npm run seed:memory` and the /demo page.
 

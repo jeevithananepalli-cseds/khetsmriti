@@ -118,6 +118,23 @@ its tags and latency.
 
 `POST /api/demo` accepts `{action: "reset" | "replay-start"}` or `{action: "replay-step", step}`.
 
+## Tests and hardening
+
+```bash
+npm test                # vitest: narrative builder, guardrails, zod schemas, LLM retry/fallback (Groq mocked)
+npm run test:coverage   # 43 tests, ~90% line coverage of the tested modules
+```
+
+- **Timeouts:** recall and interactive retains time out after 20 s, reflect after 45 s (it runs
+  an agentic loop). The UI shows a spinner, then a readable error with Try again.
+- **Safe errors:** users see short messages. Raw Hindsight and Groq errors are only written to
+  the server log.
+- **Rate limiting:** the routes that call Groq or Hindsight share a budget of 30 requests per
+  minute per client, and return 429 with `Retry-After` when it runs out.
+- **Secrets:** Hindsight and Groq code is marked `server-only`. A scan of the production client
+  bundle finds no key values, no env-var names and neither SDK.
+- **Validation:** every API route validates its input with zod and returns `{ ok, data | error }`.
+
 ## Author
 
 Jeevitha Nanepalli

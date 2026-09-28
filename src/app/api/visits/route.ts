@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { fail, ok, parseJsonBody, serverError, statusFor } from "@/lib/api";
+import { fail, ok, parseJsonBody, rateLimited, serverError, statusFor } from "@/lib/api";
 import { visitStructuredSchema } from "@/lib/dataSchemas";
 import { logVisit } from "@/lib/visits";
 
@@ -16,6 +16,8 @@ const bodySchema = z.object({
 
 /** Saves a visit (structuring the note first if needed) and retains it in memory. */
 export async function POST(req: Request) {
+  const limited = rateLimited(req);
+  if (limited) return limited;
   const body = await parseJsonBody(req, bodySchema);
   if (!body.ok) return body.response;
   try {

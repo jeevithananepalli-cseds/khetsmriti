@@ -11,7 +11,9 @@
     "setup:bank": "tsx --env-file=.env.local --conditions=react-server scripts/setup-bank.ts",
     "seed:memory": "tsx --env-file=.env.local --conditions=react-server scripts/seed-memory.ts",
     "smoke:memory": "tsx --env-file=.env.local --conditions=react-server scripts/smoke-memory.ts",
-    "forget:docs": "tsx --env-file=.env.local --conditions=react-server scripts/forget-docs.ts"
+    "forget:docs": "tsx --env-file=.env.local --conditions=react-server scripts/forget-docs.ts",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
     "@vectorize-io/hindsight-client": "^0.10.1",
@@ -30,10 +32,12 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@vitest/coverage-v8": "^4.1.11",
     "eslint": "^9",
     "eslint-config-next": "15.5.26",
     "tailwindcss": "^4",
     "tsx": "^4.23.15",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vitest": "^4.1.11"
   }
 }

@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { fail, ok, parseJsonBody, serverError, statusFor } from "@/lib/api";
+import { fail, ok, parseJsonBody, rateLimited, serverError, statusFor } from "@/lib/api";
 import { recordOutcome } from "@/lib/visits";
 
 export const dynamic = "force-dynamic";
@@ -14,6 +14,8 @@ const bodySchema = z.object({
 
 /** Records the crop outcome for a visit and retains it in memory. */
 export async function POST(req: Request) {
+  const limited = rateLimited(req);
+  if (limited) return limited;
   const body = await parseJsonBody(req, bodySchema);
   if (!body.ok) return body.response;
   try {

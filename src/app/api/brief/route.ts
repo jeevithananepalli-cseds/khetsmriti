@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { fail, ok, parseJsonBody, serverError, statusFor } from "@/lib/api";
+import { fail, ok, parseJsonBody, rateLimited, serverError, statusFor } from "@/lib/api";
 import { buildBrief } from "@/lib/brief";
 
 export const dynamic = "force-dynamic";
@@ -12,6 +12,8 @@ const briefRequestSchema = z.object({
 });
 
 export async function POST(req: Request) {
+  const limited = rateLimited(req);
+  if (limited) return limited;
   const body = await parseJsonBody(req, briefRequestSchema);
   if (!body.ok) return body.response;
   try {

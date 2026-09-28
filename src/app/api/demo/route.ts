@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { fail, ok, parseJsonBody, serverError } from "@/lib/api";
+import { fail, ok, parseJsonBody, rateLimited, serverError } from "@/lib/api";
 import { replayStep, resetDemo, startReplay } from "@/lib/demo";
 import { MemoryError } from "@/lib/memory";
 
@@ -14,6 +14,8 @@ const bodySchema = z.discriminatedUnion("action", [
 
 /** Demo controls: reset the demo farmer's memory, or replay their history one visit at a time. */
 export async function POST(req: Request) {
+  const limited = rateLimited(req);
+  if (limited) return limited;
   const body = await parseJsonBody(req, bodySchema);
   if (!body.ok) return body.response;
   try {

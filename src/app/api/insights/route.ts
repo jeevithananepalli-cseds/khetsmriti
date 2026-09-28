@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { fail, ok, serverError } from "@/lib/api";
+import { fail, ok, rateLimited, serverError } from "@/lib/api";
 import { findVillageBySlug } from "@/lib/data";
 import { cropsForVillage, getVillageInsights } from "@/lib/insights";
 
@@ -15,6 +15,8 @@ const querySchema = z.object({
 });
 
 export async function GET(req: Request) {
+  const limited = rateLimited(req);
+  if (limited) return limited;
   const params = Object.fromEntries(new URL(req.url).searchParams);
   const parsed = querySchema.safeParse(params);
   if (!parsed.success) return fail("bad_request", parsed.error.issues.map((i) => i.message).join("; "), 400);

@@ -14,9 +14,9 @@ const STAGES_BY_MONTH: Record<string, readonly string[]> = {
     "picking", "picking",
   ],
   paddy: [
-    "rabi nursery / transplanting", "rabi tillering", "rabi panicle initiation", "rabi flowering / grain filling",
-    "rabi harvest", "field preparation", "nursery", "transplanting / early tillering", "tillering",
-    "panicle initiation / booting", "flowering / grain filling", "harvest",
+    "rabi transplanting / early tillering", "rabi tillering", "rabi panicle initiation / flowering",
+    "rabi grain filling / harvest", "fallow / field preparation", "nursery", "transplanting / early tillering",
+    "tillering", "panicle initiation / booting", "flowering / grain filling", "harvest", "rabi nursery",
   ],
   maize: [
     "rabi vegetative", "rabi tasseling", "rabi grain filling", "rabi harvest", "fallow", "sowing",

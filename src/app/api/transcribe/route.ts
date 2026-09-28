@@ -1,4 +1,4 @@
-import { fail, ok, serverError, statusFor } from "@/lib/api";
+import { fail, ok, rateLimited, serverError, statusFor } from "@/lib/api";
 import { transcribeAudio, type TranscribeLanguage } from "@/lib/llm";
 
 export const dynamic = "force-dynamic";
@@ -19,6 +19,8 @@ const ALLOWED_TYPES = [
 const LANGUAGES: readonly TranscribeLanguage[] = ["te", "en", "auto"];
 
 export async function POST(req: Request) {
+  const limited = rateLimited(req);
+  if (limited) return limited;
   let form: FormData;
   try {
     form = await req.formData();

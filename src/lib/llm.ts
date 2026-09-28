@@ -79,8 +79,19 @@ function classify(err: unknown): LlmError {
   const message = err instanceof Error ? err.message : String(err);
   if (err instanceof APIConnectionTimeoutError) return { code: "timeout", message: "The language model timed out." };
   if (err instanceof RateLimitError) return { code: "rate_limited", message: "The language model is rate limited. Try again shortly." };
-  if (err instanceof APIError) return { code: "api_error", message };
+  if (err instanceof APIError) {
+    console.warn(`[llm] Groq API error ${err.status ?? ""}: ${message.slice(0, 300)}`);
+    return { code: "api_error", message: `The language model returned an error${err.status ? ` (${err.status})` : ""}.` };
+  }
   return { code: "invalid_output", message };
+}
+
+/** What the UI sees when every attempt failed: short and free of model output or server internals. */
+function publicError(error: LlmError): LlmError {
+  if (error.code === "invalid_output") {
+    return { code: "invalid_output", message: "The language model returned an answer we could not use. Please try again." };
+  }
+  return error;
 }
 
 type AttemptResult<T> = { ok: true; data: T } | { ok: false; error: LlmError; reply: string | null };
@@ -152,7 +163,7 @@ export async function generateJSON<T>(
   if (last.ok) return { ok: true, data: last.data, model: fallback, attempts };
   logFailure(fallback, attempts, last.error);
 
-  return { ok: false, error: last.error, attempts };
+  return { ok: false, error: publicError(last.error), attempts };
 }
 
 // ---------- speech to text ----------

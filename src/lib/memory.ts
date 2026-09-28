@@ -31,6 +31,8 @@ import {
 } from "./narrative";
 import { serverEnv } from "./serverEnv";
 
+export type { MemoryItemInput };
+
 // The ONLY module that talks to Hindsight. Every call is timed and pushed to the memory event log.
 
 export const BANK_MISSION =
@@ -86,12 +88,33 @@ function statusCode(err: unknown): number | undefined {
   return undefined;
 }
 
+/** Interactive calls (recall, single retains) give up after this long so the UI can show a readable error. */
+export const MEMORY_TIMEOUT_MS = 20_000;
+/** Reflect runs an agentic reasoning loop inside Hindsight and routinely takes 10–20 s, so it gets longer. */
+export const REFLECT_TIMEOUT_MS = 45_000;
+
+function isTimeout(err: unknown): boolean {
+  return err instanceof Error && (err.name === "TimeoutError" || err.name === "AbortError");
+}
+
+/** A short, user-safe message; the raw error (which can include server internals) is only logged. */
+function friendlyMessage(op: MemoryOp, err: unknown, timeoutMs?: number): string {
+  if (isTimeout(err)) {
+    return `The memory service did not respond within ${Math.round((timeoutMs ?? MEMORY_TIMEOUT_MS) / 1000)} s. Please try again.`;
+  }
+  const code = statusCode(err);
+  if (code === 401 || code === 403) return "The memory service rejected our credentials. Check HINDSIGHT_API_KEY.";
+  if (code === 429) return "The memory service is busy. Please try again in a moment.";
+  return `The memory service could not complete the ${op}. Please try again.`;
+}
+
 /** Runs a Hindsight call, records a MemoryEvent (success or failure) and normalises errors. */
 async function tracked<T>(
   op: MemoryOp,
   tags: string[],
   summary: string,
-  fn: () => Promise<T>,
+  fn: (signal: AbortSignal | undefined) => Promise<T>,
+  timeoutMs?: number,
 ): Promise<{ value: T; event: MemoryEvent }> {
   const started = performance.now();
   const finish = (ok: boolean, detail = ""): MemoryEvent =>
@@ -104,11 +127,13 @@ async function tracked<T>(
       at: new Date().toISOString(),
     });
   try {
-    const value = await fn();
+    const value = await fn(timeoutMs ? AbortSignal.timeout(timeoutMs) : undefined);
     return { value, event: finish(true) };
   } catch (err: unknown) {
-    finish(false, `failed: ${errorMessage(err)}`);
-    throw new MemoryError(`Hindsight ${op} failed: ${errorMessage(err)}`, op, statusCode(err));
+    const message = friendlyMessage(op, err, timeoutMs);
+    console.error(`[memory] ${op} failed (${summary}):`, errorMessage(err));
+    finish(false, isTimeout(err) ? "failed: timed out" : "failed");
+    throw new MemoryError(message, op, statusCode(err));
   }
 }
 
@@ -186,8 +211,14 @@ function uniqueTags(items: readonly MemoryItemInput[]): string[] {
 
 /** Retains several items in one request (used by seeding and demo replay). Returns the logged event. */
 export async function retainItems(items: readonly MemoryItemInput[], summary: string): Promise<MemoryEvent> {
-  const { event } = await tracked("retain", uniqueTags(items), summary, () =>
-    client().retainBatch(bankId(), [...items]),
+  // Seeding sends big batches from a script; only small interactive retains get the UI timeout.
+  const timeoutMs = items.length <= 2 ? MEMORY_TIMEOUT_MS : undefined;
+  const { event } = await tracked(
+    "retain",
+    uniqueTags(items),
+    summary,
+    (signal) => client().retainBatch(bankId(), [...items], { signal }),
+    timeoutMs,
   );
   return event;
 }
@@ -274,14 +305,20 @@ interface RecallScope {
 
 async function recallTagged(scope: RecallScope): Promise<MemoryHit[]> {
   const { tags, tagsMatch, query, label, asOf } = scope;
-  const { value } = await tracked("recall", tags, asOf ? `${label} as of ${asOf}` : label, () =>
-    client().recall(bankId(), query, {
-      types: RECALL_TYPES,
-      budget: "mid",
-      tags,
-      tagsMatch,
-      ...(asOf ? { queryTimestamp: `${asOf}T23:59:59+05:30` } : {}),
-    }),
+  const { value } = await tracked(
+    "recall",
+    tags,
+    asOf ? `${label} as of ${asOf}` : label,
+    (signal) =>
+      client().recall(bankId(), query, {
+        types: RECALL_TYPES,
+        budget: "mid",
+        tags,
+        tagsMatch,
+        signal,
+        ...(asOf ? { queryTimestamp: `${asOf}T23:59:59+05:30` } : {}),
+      }),
+    MEMORY_TIMEOUT_MS,
   );
   const hits = value.results.map(toMemoryHit);
   return asOf ? hits.filter((h) => !h.occurredAt || h.occurredAt.slice(0, 10) <= asOf) : hits;
@@ -329,8 +366,13 @@ function toReflectResult(res: ReflectResponse): ReflectResult {
 export async function reflectVillage(villageSlug: string, question: string, cropSlug?: string): Promise<ReflectResult> {
   const tags = [tag.village(villageSlug)];
   const eventTags = cropSlug ? [...tags, tag.crop(cropSlug)] : tags;
-  const { value } = await tracked("reflect", eventTags, `reflect ${villageSlug}: ${question.slice(0, 60)}`, () =>
-    client().reflect(bankId(), question, { budget: "mid", tags, tagsMatch: "any_strict", includeFacts: true }),
+  const { value } = await tracked(
+    "reflect",
+    eventTags,
+    `reflect ${villageSlug}: ${question.slice(0, 60)}`,
+    (signal) =>
+      client().reflect(bankId(), question, { budget: "mid", tags, tagsMatch: "any_strict", includeFacts: true, signal }),
+    REFLECT_TIMEOUT_MS,
   );
   return toReflectResult(value);
 }
