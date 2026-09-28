@@ -105,6 +105,19 @@ The **Memory panel** appears on every screen: a right-hand drawer on desktop and
 phones. It polls `/api/memory/events` every 2 seconds and shows each retain, recall and reflect with
 its tags and latency.
 
+## Demo page (`/demo`)
+
+1. **Side by side:** Ramesh Goud's (F001) brief with Memory OFF and Memory ON.
+2. **Replay history:** clears F001's memory, then retains his visits one at a time (each with its
+   outcome). After every step it regenerates the brief for the next visit date. Recalls are
+   limited to that date (`asOf`), so a brief never "remembers" the future.
+3. **Learning curve:** a recharts line chart of the monthly acceptance rate and issue-controlled rate.
+   It's computed from the data files and labelled as simulated field data.
+4. **Reset demo:** re-retains only F001's seed documents by `document_id` and deletes any visits
+   logged for F001 during the demo.
+
+`POST /api/demo` accepts `{action: "reset" | "replay-start"}` or `{action: "replay-step", step}`.
+
 ## Author
 
 Jeevitha Nanepalli

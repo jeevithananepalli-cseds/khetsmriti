@@ -35,16 +35,18 @@ async function recallForVisit(farmer: Farmer, village: Village, visitDate: strin
     "What was advised before, what objections did the farmer raise, and what worked or failed?";
 
   const [farmerMemories, ...similarByCrop] = await Promise.all([
-    recallFarmer(farmer.id, query),
+    recallFarmer(farmer.id, query, visitDate),
     ...farmer.crops.map((crop) =>
       recallSimilar(
         village.slug,
         crop,
         `${crop} problems in ${village.name}: which advice and products worked, which failed or were rejected on price?`,
+        visitDate,
       ),
     ),
   ]);
 
+  // Memories dated after the visit are dropped (asOf), so a brief never "remembers" the future.
   // Similar cases should come from OTHER farmers; this farmer's own history is already above.
   const similarMemories = dedupe(similarByCrop.flat()).filter((h) => h.metadata.farmerId !== farmer.id);
   return { farmerMemories, similarMemories };

@@ -76,6 +76,21 @@ export async function addVisit(visit: Omit<Visit, "id">): Promise<Visit> {
   });
 }
 
+/** Removes all app-logged visits (and their outcomes) for a farmer; returns the removed visit ids. */
+export async function removeRuntimeVisitsForFarmer(farmerId: string): Promise<string[]> {
+  return updateRuntime((current) => {
+    const removed = current.visits.filter((v) => v.farmerId === farmerId).map((v) => v.id);
+    const removedSet = new Set(removed);
+    return {
+      next: {
+        visits: current.visits.filter((v) => !removedSet.has(v.id)),
+        outcomes: current.outcomes.filter((o) => !removedSet.has(o.visitId)),
+      },
+      result: removed,
+    };
+  });
+}
+
 /** Saves (or replaces) the outcome for a visit. */
 export async function upsertOutcome(outcome: Outcome): Promise<Outcome> {
   return updateRuntime((current) => ({

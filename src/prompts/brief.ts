@@ -14,13 +14,20 @@ export interface BriefPromptInput {
   catalogue: readonly Product[];
 }
 
-const MAX_FARMER_MEMORIES = 30;
-const MAX_SIMILAR_MEMORIES = 20;
-const MAX_MEMORY_CHARS = 420;
+// Keeps the prompt well inside Groq's per-minute token budget while covering a season of visits.
+const MAX_FARMER_MEMORIES = 24;
+const MAX_SIMILAR_MEMORIES = 14;
+const MAX_MEMORY_CHARS = 320;
+
+/** Hindsight appends " | When: … | Involving: …"; the date is already shown, so drop the When part. */
+function compactMemoryText(text: string): string {
+  return text.replace(/\s*\|\s*When:[^|]*/g, "").trim();
+}
 
 function memoryLine(m: MemoryHit): string {
   const date = m.occurredAt ? m.occurredAt.slice(0, 10) : "undated";
-  const text = m.text.length > MAX_MEMORY_CHARS ? `${m.text.slice(0, MAX_MEMORY_CHARS)}…` : m.text;
+  const compact = compactMemoryText(m.text);
+  const text = compact.length > MAX_MEMORY_CHARS ? `${compact.slice(0, MAX_MEMORY_CHARS)}…` : compact;
   return `- [${date}] (${m.type ?? "memory"}) ${text}`;
 }
 

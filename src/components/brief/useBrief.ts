@@ -11,16 +11,17 @@ export type BriefState =
 
 /**
  * Loads the brief for one farmer in one memory mode. Results are cached per mode so flipping the
- * Memory toggle back and forth is instant; `refresh` forces a new generation.
+ * Memory toggle back and forth is instant; `refresh` forces a new generation, and changing
+ * `externalKey` (e.g. after the demo is reset) invalidates the cache.
  */
-export function useBrief(farmerId: string, memoryEnabled: boolean) {
+export function useBrief(farmerId: string, memoryEnabled: boolean, externalKey = 0) {
   const cache = useRef(new Map<string, BriefResponse>());
   const [state, setState] = useState<BriefState>({ status: "loading" });
   const [nonce, setNonce] = useState(0);
   const forceRef = useRef(false);
 
   useEffect(() => {
-    const key = `${farmerId}|${memoryEnabled}`;
+    const key = `${farmerId}|${memoryEnabled}|${externalKey}`;
     const cached = cache.current.get(key);
     if (cached && !forceRef.current) {
       setState({ status: "ready", data: cached });
@@ -42,7 +43,7 @@ export function useBrief(farmerId: string, memoryEnabled: boolean) {
         // aborted because the farmer or mode changed; the next effect run takes over
       });
     return () => controller.abort();
-  }, [farmerId, memoryEnabled, nonce]);
+  }, [farmerId, memoryEnabled, externalKey, nonce]);
 
   const refresh = useCallback(() => {
     forceRef.current = true;

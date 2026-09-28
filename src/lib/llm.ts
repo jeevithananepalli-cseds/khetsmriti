@@ -110,6 +110,10 @@ async function attempt<T>(
   return { ok: true, data: parsed.data };
 }
 
+function logFailure(model: string, attemptNo: number, error: LlmError): void {
+  console.warn(`[llm] attempt ${attemptNo} on ${model} failed (${error.code}): ${error.message.slice(0, 300)}`);
+}
+
 function withCorrection(messages: ChatMessage[], reply: string | null, error: LlmError): ChatMessage[] {
   const correction: ChatMessage = {
     role: "user",
@@ -129,14 +133,26 @@ export async function generateJSON<T>(
 
   const first = await attempt(schema, primary, messages, complete);
   if (first.ok) return { ok: true, data: first.data, model: primary, attempts: 1 };
+  logFailure(primary, 1, first.error);
 
-  const retry = await attempt(schema, primary, withCorrection(messages, first.reply, first.error), complete);
-  if (retry.ok) return { ok: true, data: retry.data, model: primary, attempts: 2 };
+  // Retrying the same model is pointless when it is rate limited; go straight to the fallback.
+  let lastError = first.error;
+  let attempts = 1;
+  if (first.error.code !== "rate_limited") {
+    const retry = await attempt(schema, primary, withCorrection(messages, first.reply, first.error), complete);
+    attempts = 2;
+    if (retry.ok) return { ok: true, data: retry.data, model: primary, attempts };
+    logFailure(primary, attempts, retry.error);
+    lastError = retry.error;
+  }
 
-  const last = await attempt(schema, fallback, withCorrection(messages, null, retry.error), complete);
-  if (last.ok) return { ok: true, data: last.data, model: fallback, attempts: 3 };
+  const fallbackMessages = lastError.code === "invalid_output" ? withCorrection(messages, null, lastError) : messages;
+  const last = await attempt(schema, fallback, fallbackMessages, complete);
+  attempts += 1;
+  if (last.ok) return { ok: true, data: last.data, model: fallback, attempts };
+  logFailure(fallback, attempts, last.error);
 
-  return { ok: false, error: last.error, attempts: 3 };
+  return { ok: false, error: last.error, attempts };
 }
 
 // ---------- speech to text ----------

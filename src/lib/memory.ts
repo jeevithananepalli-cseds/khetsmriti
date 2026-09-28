@@ -217,18 +217,31 @@ export async function retainOutcome(
   );
 }
 
+const DELETE_ATTEMPTS = 4;
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
+/** Deletes one document, retrying transient server errors (Hindsight can deadlock with background consolidation). */
+async function deleteDocumentWithRetry(documentId: string): Promise<boolean> {
+  for (let attempt = 1; ; attempt++) {
+    try {
+      await client().deleteDocument(bankId(), documentId);
+      return true;
+    } catch (err: unknown) {
+      // The SDK's deleteDocument throws a plain Error (no status code) for missing documents.
+      if (statusCode(err) === 404 || /not found/i.test(errorMessage(err))) return false;
+      if (attempt >= DELETE_ATTEMPTS) throw err;
+      await sleep(600 * attempt);
+    }
+  }
+}
+
 /** Deletes documents (and their memories) by document_id. Missing documents are ignored. */
 export async function forgetDocuments(documentIds: readonly string[], summary: string): Promise<number> {
   if (documentIds.length === 0) return 0;
   const { value } = await tracked("retain", [], summary, async () => {
     let deleted = 0;
     for (const id of documentIds) {
-      try {
-        await client().deleteDocument(bankId(), id);
-        deleted += 1;
-      } catch (err: unknown) {
-        if (statusCode(err) !== 404) throw err;
-      }
+      if (await deleteDocumentWithRetry(id)) deleted += 1;
     }
     return deleted;
   });
@@ -250,26 +263,49 @@ function toMemoryHit(r: RecallResult): MemoryHit {
   };
 }
 
-async function recallTagged(tags: string[], tagsMatch: "any_strict" | "all_strict", query: string, label: string) {
-  const { value } = await tracked("recall", tags, label, () =>
-    client().recall(bankId(), query, { types: RECALL_TYPES, budget: "mid", tags, tagsMatch }),
+interface RecallScope {
+  tags: string[];
+  tagsMatch: "any_strict" | "all_strict";
+  query: string;
+  label: string;
+  /** ISO date the recall is "as of": used for recency scoring, and memories after it are dropped. */
+  asOf?: string;
+}
+
+async function recallTagged(scope: RecallScope): Promise<MemoryHit[]> {
+  const { tags, tagsMatch, query, label, asOf } = scope;
+  const { value } = await tracked("recall", tags, asOf ? `${label} as of ${asOf}` : label, () =>
+    client().recall(bankId(), query, {
+      types: RECALL_TYPES,
+      budget: "mid",
+      tags,
+      tagsMatch,
+      ...(asOf ? { queryTimestamp: `${asOf}T23:59:59+05:30` } : {}),
+    }),
   );
-  return value.results.map(toMemoryHit);
+  const hits = value.results.map(toMemoryHit);
+  return asOf ? hits.filter((h) => !h.occurredAt || h.occurredAt.slice(0, 10) <= asOf) : hits;
 }
 
 /** Everything remembered about one farmer (their visits, outcomes and per-farmer observations). */
-export async function recallFarmer(farmerId: string, query: string): Promise<MemoryHit[]> {
-  return recallTagged([tag.farmer(farmerId)], "any_strict", query, `recall farmer ${farmerId}`);
+export async function recallFarmer(farmerId: string, query: string, asOf?: string): Promise<MemoryHit[]> {
+  return recallTagged({ tags: [tag.farmer(farmerId)], tagsMatch: "any_strict", query, label: `recall farmer ${farmerId}`, asOf });
 }
 
 /** Similar cases from other farmers: memories tagged with BOTH this village and this crop. */
-export async function recallSimilar(villageSlug: string, cropSlug: string, query: string): Promise<MemoryHit[]> {
-  return recallTagged(
-    [tag.village(villageSlug), tag.crop(cropSlug)],
-    "all_strict",
+export async function recallSimilar(
+  villageSlug: string,
+  cropSlug: string,
+  query: string,
+  asOf?: string,
+): Promise<MemoryHit[]> {
+  return recallTagged({
+    tags: [tag.village(villageSlug), tag.crop(cropSlug)],
+    tagsMatch: "all_strict",
     query,
-    `recall similar ${villageSlug}/${cropSlug}`,
-  );
+    label: `recall similar ${villageSlug}/${cropSlug}`,
+    asOf,
+  });
 }
 
 // ---------- reflect ----------
