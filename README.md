@@ -66,6 +66,19 @@ npm run smoke:memory   # recall F001, similar Chevella chilli cases, reflect on 
 Other routes: `GET /api/farmers`, `GET /api/farmers/:id`, `GET /api/memory/events?after=<id>`.
 Sample outputs for F001 are in [`docs/brief-samples.md`](docs/brief-samples.md).
 
+## Logging a visit
+
+- `POST /api/transcribe`: multipart `audio` (webm/m4a/wav, under 2 minutes) plus an optional
+  `language` (`te`, `en` or `auto`). Uses Groq Whisper `whisper-large-v3`. Empty recordings and
+  silence get a clear error.
+- `POST /api/visits/structure {farmerId, note}`: turns an English, Telugu or mixed note into a
+  structured visit for the officer to review. Nothing is saved. Products mentioned in the note that
+  aren't in the catalogue are flagged, never invented.
+- `POST /api/visits {farmerId, note, structured?}`: saves the visit to `data/visits.runtime.json`
+  (git-ignored) and retains it as `visit:<id>`. The response includes the memory event.
+- `POST /api/outcomes {visitId, applied, result, yieldNote}`: retains the outcome as `outcome:<id>`.
+- `npm run forget:docs -- visit:V037 outcome:V037`: deletes test documents from memory.
+
 ## Author
 
 Jeevitha Nanepalli

@@ -10,7 +10,8 @@
     "validate:data": "tsx scripts/validate-data.ts",
     "setup:bank": "tsx --env-file=.env.local --conditions=react-server scripts/setup-bank.ts",
     "seed:memory": "tsx --env-file=.env.local --conditions=react-server scripts/seed-memory.ts",
-    "smoke:memory": "tsx --env-file=.env.local --conditions=react-server scripts/smoke-memory.ts"
+    "smoke:memory": "tsx --env-file=.env.local --conditions=react-server scripts/smoke-memory.ts",
+    "forget:docs": "tsx --env-file=.env.local --conditions=react-server scripts/forget-docs.ts"
   },
   "dependencies": {
     "@vectorize-io/hindsight-client": "^0.10.1",

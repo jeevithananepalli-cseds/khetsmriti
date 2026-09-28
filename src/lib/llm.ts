@@ -137,3 +137,27 @@ export async function generateJSON<T>(
 
   return { ok: false, error: last.error, attempts: 3 };
 }
+
+// ---------- speech to text ----------
+
+export type TranscribeLanguage = "te" | "en" | "auto";
+
+export type TranscribeResult = { ok: true; text: string } | { ok: false; error: LlmError };
+
+const WHISPER_MODEL = "whisper-large-v3";
+
+/** Transcribes a short voice note with Groq Whisper. "auto" lets Whisper detect Telugu/English. */
+export async function transcribeAudio(file: File, language: TranscribeLanguage): Promise<TranscribeResult> {
+  try {
+    const res = await groq().audio.transcriptions.create({
+      file,
+      model: WHISPER_MODEL,
+      response_format: "json",
+      temperature: 0,
+      ...(language === "auto" ? {} : { language }),
+    });
+    return { ok: true, text: res.text.trim() };
+  } catch (err: unknown) {
+    return { ok: false, error: classify(err) };
+  }
+}

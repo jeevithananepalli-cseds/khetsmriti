@@ -1,5 +1,5 @@
 import { z } from "zod";
-import type { Farmer, Outcome, Product, Village, Visit } from "@/types/domain";
+import type { Farmer, Outcome, Product, Village, Visit, VisitStructured } from "@/types/domain";
 
 // zod schemas for the JSON files in /data. Typed against src/types/domain.ts so the two can't drift.
 
@@ -65,6 +65,21 @@ export const outcomeSchema: z.ZodType<Outcome> = z.object({
   applied: z.boolean(),
   result: z.enum(["controlled", "partial", "failed", "not_applied"]),
   yieldNote: z.string().min(1),
+});
+
+export const visitStructuredSchema: z.ZodType<VisitStructured> = z.object({
+  crop: slug,
+  cropStage: z.string().min(1),
+  issue: z.object({
+    type: z.enum(["pest", "disease", "soil", "price", "irrigation"]),
+    name: z.string().min(1),
+  }),
+  advice: z.object({
+    productIds: z.array(z.string()),
+    note: z.string().min(1),
+  }),
+  objection: z.string().min(1).nullable(),
+  farmerReaction: z.enum(["accepted", "hesitant", "rejected"]),
 });
 
 export const villagesFileSchema = z.array(villageSchema);

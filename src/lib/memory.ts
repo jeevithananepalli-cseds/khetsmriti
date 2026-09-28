@@ -7,6 +7,7 @@ import {
 } from "@vectorize-io/hindsight-client";
 import type {
   Farmer,
+  MemoryEvent,
   MemoryFactType,
   MemoryHit,
   MemoryOp,
@@ -86,9 +87,14 @@ function statusCode(err: unknown): number | undefined {
 }
 
 /** Runs a Hindsight call, records a MemoryEvent (success or failure) and normalises errors. */
-async function tracked<T>(op: MemoryOp, tags: string[], summary: string, fn: () => Promise<T>): Promise<T> {
+async function tracked<T>(
+  op: MemoryOp,
+  tags: string[],
+  summary: string,
+  fn: () => Promise<T>,
+): Promise<{ value: T; event: MemoryEvent }> {
   const started = performance.now();
-  const finish = (ok: boolean, detail = ""): void => {
+  const finish = (ok: boolean, detail = ""): MemoryEvent =>
     logMemoryEvent({
       op,
       ok,
@@ -97,11 +103,9 @@ async function tracked<T>(op: MemoryOp, tags: string[], summary: string, fn: () 
       latencyMs: Math.round(performance.now() - started),
       at: new Date().toISOString(),
     });
-  };
   try {
-    const result = await fn();
-    finish(true);
-    return result;
+    const value = await fn();
+    return { value, event: finish(true) };
   } catch (err: unknown) {
     finish(false, `failed: ${errorMessage(err)}`);
     throw new MemoryError(`Hindsight ${op} failed: ${errorMessage(err)}`, op, statusCode(err));
@@ -113,7 +117,7 @@ async function tracked<T>(op: MemoryOp, tags: string[], summary: string, fn: () 
 /** Creates or updates the bank and syncs the directives. Safe to run repeatedly. */
 export async function ensureBank(): Promise<{ bankId: string; directives: number }> {
   const id = bankId();
-  return tracked("retain", [], `ensure bank ${id}`, async () => {
+  const { value } = await tracked("retain", [], `ensure bank ${id}`, async () => {
     await client().createBank(id, {
       name: "KhetSmriti field memory",
       reflectMission: BANK_MISSION,
@@ -136,6 +140,7 @@ export async function ensureBank(): Promise<{ bankId: string; directives: number
     }
     return { bankId: id, directives: BANK_DIRECTIVES.length };
   });
+  return value;
 }
 
 // ---------- retain ----------
@@ -179,13 +184,12 @@ function uniqueTags(items: readonly MemoryItemInput[]): string[] {
   return [...new Set(items.flatMap((i) => i.tags ?? []))];
 }
 
-/** Retains several items in one request (used by seeding and demo replay). */
-export async function retainItems(items: readonly MemoryItemInput[], summary: string): Promise<number> {
-  if (items.length === 0) return 0;
-  const res = await tracked("retain", uniqueTags(items), summary, () =>
+/** Retains several items in one request (used by seeding and demo replay). Returns the logged event. */
+export async function retainItems(items: readonly MemoryItemInput[], summary: string): Promise<MemoryEvent> {
+  const { event } = await tracked("retain", uniqueTags(items), summary, () =>
     client().retainBatch(bankId(), [...items]),
   );
-  return res.items_count;
+  return event;
 }
 
 export async function retainVisit(
@@ -193,8 +197,8 @@ export async function retainVisit(
   farmer: Farmer,
   village: Village,
   catalogue: readonly Product[],
-): Promise<void> {
-  await retainItems(
+): Promise<MemoryEvent> {
+  return retainItems(
     [visitMemoryItem(visit, farmer, village, catalogue)],
     `visit ${visit.id} · ${farmer.name} · ${visit.crop} ${visit.issue.name}`,
   );
@@ -206,11 +210,29 @@ export async function retainOutcome(
   farmer: Farmer,
   village: Village,
   catalogue: readonly Product[],
-): Promise<void> {
-  await retainItems(
+): Promise<MemoryEvent> {
+  return retainItems(
     [outcomeMemoryItem(outcome, visit, farmer, village, catalogue)],
     `outcome ${visit.id} · ${farmer.name} · ${outcome.result}`,
   );
+}
+
+/** Deletes documents (and their memories) by document_id. Missing documents are ignored. */
+export async function forgetDocuments(documentIds: readonly string[], summary: string): Promise<number> {
+  if (documentIds.length === 0) return 0;
+  const { value } = await tracked("retain", [], summary, async () => {
+    let deleted = 0;
+    for (const id of documentIds) {
+      try {
+        await client().deleteDocument(bankId(), id);
+        deleted += 1;
+      } catch (err: unknown) {
+        if (statusCode(err) !== 404) throw err;
+      }
+    }
+    return deleted;
+  });
+  return value;
 }
 
 // ---------- recall ----------
@@ -229,10 +251,10 @@ function toMemoryHit(r: RecallResult): MemoryHit {
 }
 
 async function recallTagged(tags: string[], tagsMatch: "any_strict" | "all_strict", query: string, label: string) {
-  const res = await tracked("recall", tags, label, () =>
+  const { value } = await tracked("recall", tags, label, () =>
     client().recall(bankId(), query, { types: RECALL_TYPES, budget: "mid", tags, tagsMatch }),
   );
-  return res.results.map(toMemoryHit);
+  return value.results.map(toMemoryHit);
 }
 
 /** Everything remembered about one farmer (their visits, outcomes and per-farmer observations). */
@@ -267,8 +289,8 @@ function toReflectResult(res: ReflectResponse): ReflectResult {
 /** Asks Hindsight to reason over everything tagged with this village. */
 export async function reflectVillage(villageSlug: string, question: string): Promise<ReflectResult> {
   const tags = [tag.village(villageSlug)];
-  const res = await tracked("reflect", tags, `reflect ${villageSlug}: ${question.slice(0, 60)}`, () =>
+  const { value } = await tracked("reflect", tags, `reflect ${villageSlug}: ${question.slice(0, 60)}`, () =>
     client().reflect(bankId(), question, { budget: "mid", tags, tagsMatch: "any_strict", includeFacts: true }),
   );
-  return toReflectResult(res);
+  return toReflectResult(value);
 }
